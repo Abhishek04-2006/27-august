@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>birthday countdown</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #f8ffae 0%, #43c6ac 100%);
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            color: #333;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5em;
+            letter-spacing: 2px;
+            text-transform: lowercase;
+        }
+        #countdown {
+            font-size: 2rem;
+            margin-bottom: 1em;
+            letter-spacing: 1px;
+            text-transform: lowercase;
+        }
+        .message {
+            font-size: 1.2rem;
+            margin-top: 1em;
+            color: #2d6a4f;
+            letter-spacing: 1px;
+            text-transform: lowercase;
+            background: rgba(255,255,255,0.5);
+            padding: 0.7em 1.5em;
+            border-radius: 1em;
+            display: inline-block;
+        }
+        .heart {
+            position: fixed;
+            bottom: -30px;
+            font-size: 1.5rem;
+            color: #e63946;
+            left: 50%;
+            pointer-events: none;
+            z-index: 0;
+            animation: flyUp 3s linear forwards;
+            opacity: 0.85;
+            will-change: transform, opacity;
+        }
+        @keyframes flyUp {
+            0% {
+                transform: translateY(0) scale(1) rotate(0deg);
+                opacity: 0.85;
+            }
+            80% {
+                opacity: 0.85;
+            }
+            100% {
+                transform: translateY(-100vh) scale(1.3) rotate(30deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Happy Birthday VISSHU</h1>
+    <h1>Countdown to your special day</h1>
+    <h1>27 august</h1>
+    <h1>2025</h1>
+    <div id="countdown"></div>
+    <div class="message" id="message"></div>
+    <script>
+        const birthday = new Date('2025-08-27T00:00:00');
+        const messages = [
+            "every second brings you closer to joy.",
+            "may your days be filled with smiles.",
+            "your birthday is a celebration of you.",
+            "let happiness grow as the days pass.",
+            "the best is yet to come.",
+            "count every moment, cherish every memory.",
+            "you are loved more than you know.",
+            "wishing you laughter and sunshine ahead.",
+            "your journey is beautiful and unique.",
+            "get ready for a year of new adventures."
+        ];
+
+        function updateCountdown() {
+            const now = new Date();
+            const diff = birthday - now;
+            if (diff <= 0) {
+                document.getElementById('countdown').textContent = "HAPPY BIRTHDAY MY DEAR VISSHU!";
+                document.getElementById('message').textContent = "may your day be as wonderful as you are.";
+                return;
+            }
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((diff / (1000 * 60)) % 60);
+            const seconds = Math.floor((diff / 1000) % 60);
+
+            document.getElementById('countdown').textContent =
+                `${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds left`;
+
+            // pick a random message
+            const msg = messages[Math.floor(Math.random() * messages.length)];
+            document.getElementById('message').textContent = msg;
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+
+        function createHeart() {
+            const heart = document.createElement('span');
+            heart.className = 'heart';
+            heart.innerHTML = '❤';
+            // Random horizontal position (avoid center where text is)
+            const min = 10, max = 90;
+            heart.style.left = Math.random() * (max - min) + min + 'vw';
+            heart.style.fontSize = (Math.random() * 1 + 1) + 'rem';
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 3000);
+        }
+
+        // Create hearts at intervals
+        setInterval(createHeart, 400);
+    </script>
+</body>
+</html>
